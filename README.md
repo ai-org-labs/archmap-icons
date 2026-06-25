@@ -117,9 +117,10 @@ npm run generate:cloud-icons -- /tmp/archmap-icon-sources/extracted src/cloud-ic
 
 ## Included Set
 
-This is the first "famous services" pack for architecture diagrams. It covers
-10 rows/categories and registers 12 provider keys because two rows have common
-alternatives.
+This is the common external-services pack for architecture diagrams. It covers
+observability, edge/security, identity, development platforms, incident/ITSM,
+containers, infrastructure-as-code, databases, streaming, search, chat, and app
+hosting.
 
 | Rank | Service key(s) | Diagram role |
 | ---: | --- | --- |
@@ -133,17 +134,39 @@ alternatives.
 | 8 | `newrelic`, `dynatrace` | Observability |
 | 9 | `splunk` | Log Analytics / SIEM |
 | 10 | `servicenow`, `jira` | ITSM / Ticketing |
+| 11 | `kubernetes` | Container Orchestration |
+| 12 | `docker` | Containers |
+| 13 | `terraform` | Infrastructure as Code |
+| 14 | `grafana` | Dashboards / Observability |
+| 15 | `prometheus` | Metrics / Monitoring |
+| 16 | `postgresql` | Relational Database |
+| 17 | `mysql` | Relational Database |
+| 18 | `redis` | Cache / Key-Value Store |
+| 19 | `mongodb` | Document Database |
+| 20 | `kafka` | Event Streaming |
+| 21 | `elasticsearch` | Search / Log Indexing |
+| 22 | `slack` | ChatOps / Collaboration |
+| 23 | `microsoftteams` | ChatOps / Collaboration |
+| 24 | `auth0` | Identity Provider |
+| 25 | `keycloak` | Identity Provider |
+| 26 | `vercel` | Frontend Hosting / Deployment |
+| 27 | `netlify` | Frontend Hosting / Deployment |
+| 28 | `heroku` | PaaS / App Hosting |
+| 29 | `supabase` | Backend Platform |
+| 30 | `firebase` | Backend Platform |
 
 Several spelling aliases are also registered, such as `new-relic`,
-`pager-duty`, and `service-now`.
+`pager-duty`, `service-now`, `k8s`, `postgres`, `apache_kafka`, `teams`, and
+`microsoft_teams`.
 
 ## Licensing Notes
 
 Most logos are sourced from `simple-icons`, which is CC0-licensed, but brand
-names and logos may still be subject to trademark rules. `wiz` and `servicenow`
-are lettered placeholder badges because they are not available in the
-`simple-icons` set used here. Replace those with official licensed assets in
-production if your usage requires brand-accurate logos.
+names and logos may still be subject to trademark rules. `wiz`, `servicenow`,
+`slack`, `microsoftteams`, and `heroku` are lettered placeholder badges because
+they are not available in the `simple-icons` set used here. Replace those with
+official licensed assets in production if your usage requires brand-accurate
+logos.
 
 Cloud provider service icons are sourced from the official AWS Architecture
 Icons package, Google Cloud Icon Library downloads, and Microsoft Azure
