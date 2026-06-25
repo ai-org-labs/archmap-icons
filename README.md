@@ -98,8 +98,15 @@ Examples:
 | GCP | `gcp/google_kubernetes_engine` | `gcp/gke`, `gcp/kubernetes` |
 | GCP | `gcp/pubsub` | `gcp/pub_sub`, `gcp/messaging` |
 | GCP | `gcp/cloud_sql` | `gcp/sql` |
-| Azure | `azure/virtual_machine` | |
+| Azure | `azure/virtual_machine` | `azure/vm` |
 | Azure | `azure/kubernetes_services` | `azure/kubernetes_service` |
+| Azure | `azure/storage_accounts` | `azure/blob`, `azure/storage` |
+| Azure | `azure/virtual_networks` | `azure/vnet` |
+| Azure | `azure/key_vaults` | `azure/keyvault`, `azure/kv` |
+| Azure | `azure/container_registries` | `azure/acr` |
+| Azure | `azure/api_management_services` | `azure/apim` |
+| Azure | `azure/load_balancers` | `azure/lb` |
+| Azure | `azure/web_application_firewall_policies_waf` | `azure/waf` |
 
 The generated cloud set currently contains:
 
