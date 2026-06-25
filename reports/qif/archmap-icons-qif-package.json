@@ -1,0 +1,438 @@
+{
+  "qifVersion": "0.3.0",
+  "packageId": "QIFPKG-ARCHMAP-ICONS-001",
+  "title": "ArchMap Icons Quality Intent Review",
+  "missions": [
+    {
+      "id": "MIS-ARCHMAP-ICONS-001",
+      "statement": "Provide an icon pack that AI agents and diagram authors can reliably use in ArchMap architecture diagrams.",
+      "stakeholderRefs": ["STK-AI-001", "STK-AUTHOR-001", "STK-MAINTAINER-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "status": "active"
+    }
+  ],
+  "stakeholders": [
+    {
+      "id": "STK-AI-001",
+      "name": "AI diagram generator",
+      "category": "agent",
+      "needs": ["Discover service icons from natural service names, aliases, provider names, and common abbreviations."],
+      "harmsToAvoid": ["Generating diagrams with missing, generic, or wrong vendor-service icons."]
+    },
+    {
+      "id": "STK-AUTHOR-001",
+      "name": "Architecture diagram author",
+      "category": "user",
+      "needs": ["Install icons with a small API and use clear provider/kind metadata in ArchMap."],
+      "harmsToAvoid": ["Hand-registering large icon sets or reverse-engineering provider-specific service names."]
+    },
+    {
+      "id": "STK-MAINTAINER-001",
+      "name": "Icon pack maintainer",
+      "category": "maintainer",
+      "needs": ["Regenerate cloud-provider catalogs reproducibly and document vendor asset limitations."],
+      "harmsToAvoid": ["Stale generated data, unclear provenance, or accidental claims of unrestricted vendor-logo rights."]
+    }
+  ],
+  "contexts": [
+    {
+      "id": "CTX-ARCHMAP-ICONS-001",
+      "scope": "Local @archmap/icons package after adding common SaaS icons, cloud-provider service catalogs, and AWS/GCP/Azure aliases.",
+      "domain": "architecture diagram icon registry",
+      "constraints": [
+        "ArchMap resolves icons by provider/kind, provider, then kind.",
+        "The core ArchMap package intentionally ships no vendor assets.",
+        "Some third-party services are represented by placeholder badges when simple-icons does not provide an icon."
+      ],
+      "assumptions": [
+        "TypeScript typecheck and build success are evidence of package-level integration readiness.",
+        "Runtime smoke checks over installer APIs are evidence of AI discoverability for representative services.",
+        "Semantic brand correctness still depends on vendor trademark and asset terms outside this package."
+      ],
+      "timeHorizon": "current local working tree"
+    }
+  ],
+  "risks": [
+    {
+      "id": "RSK-DISCOVERY-001",
+      "statement": "AI agents may fail to find the intended provider service icon from common names or abbreviations.",
+      "stakeholderRefs": ["STK-AI-001", "STK-AUTHOR-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "severity": "high",
+      "likelihood": "possible",
+      "detectability": "moderate",
+      "riskAppetite": "averse",
+      "lossBoundary": "Representative common aliases such as aws/s3, gcp/gcs, and azure/aks must resolve to concrete icon entries."
+    },
+    {
+      "id": "RSK-INTEGRATION-001",
+      "statement": "The icon package may not compile or may register keys that do not match ArchMap's icon registry contract.",
+      "stakeholderRefs": ["STK-AUTHOR-001", "STK-MAINTAINER-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "severity": "high",
+      "likelihood": "unlikely",
+      "detectability": "easy",
+      "riskAppetite": "minimal",
+      "lossBoundary": "The package must pass TypeScript checks, build, and runtime installer smoke checks before use."
+    },
+    {
+      "id": "RSK-PROVENANCE-001",
+      "statement": "Vendor-logo provenance or placeholder status may be unclear to downstream users.",
+      "stakeholderRefs": ["STK-AUTHOR-001", "STK-MAINTAINER-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "severity": "medium",
+      "likelihood": "possible",
+      "detectability": "moderate",
+      "riskAppetite": "cautious",
+      "lossBoundary": "Documentation must distinguish simple-icons sourced logos, official cloud provider SVGs, and placeholder badges."
+    },
+    {
+      "id": "RSK-DRIFT-001",
+      "statement": "Generated cloud icon data may drift from the generator or become hard to refresh.",
+      "stakeholderRefs": ["STK-MAINTAINER-001", "STK-AI-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "severity": "medium",
+      "likelihood": "possible",
+      "detectability": "moderate",
+      "riskAppetite": "cautious",
+      "lossBoundary": "The generated catalog must have a checked-in generator and documented regeneration command."
+    }
+  ],
+  "knowledgeSources": [
+    {
+      "id": "SRC-README-001",
+      "sourceType": "document",
+      "title": "README.md",
+      "owner": "archmap-icons",
+      "reliability": 0.75,
+      "accessMode": "direct",
+      "extractionMethod": "documentation review"
+    },
+    {
+      "id": "SRC-SOURCE-001",
+      "sourceType": "project-history",
+      "title": "TypeScript source and generated icon catalog",
+      "owner": "archmap-icons",
+      "reliability": 0.85,
+      "accessMode": "direct",
+      "extractionMethod": "source inspection and runtime smoke execution"
+    },
+    {
+      "id": "SRC-TOOLS-001",
+      "sourceType": "measurement",
+      "title": "npm run typecheck and npm run build",
+      "owner": "local development environment",
+      "reliability": 0.9,
+      "accessMode": "direct",
+      "extractionMethod": "command execution"
+    },
+    {
+      "id": "SRC-QIF-001",
+      "sourceType": "external-standard",
+      "title": "Quality Intent Framework v0.3.0 validator",
+      "owner": "ai-org-labs/quality-intent-framework",
+      "reliability": 0.8,
+      "accessMode": "direct",
+      "extractionMethod": "local validator execution"
+    }
+  ],
+  "qualityIntents": [
+    {
+      "id": "QIN-DISCOVERY-001",
+      "statement": "AI agents can discover cloud and common platform icons through provider/kind keys and practical aliases.",
+      "purpose": "Reduce wrong-icon and missing-icon failure modes in generated architecture diagrams.",
+      "stakeholderRefs": ["STK-AI-001", "STK-AUTHOR-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "riskRefs": ["RSK-DISCOVERY-001"],
+      "sourceRefs": ["SRC-SOURCE-001", "SRC-README-001"],
+      "governanceOwner": "Maintainer",
+      "status": "active",
+      "acceptanceCriteria": [
+        "Search and lookup APIs exist for cloud icon entries.",
+        "Representative AWS, GCP, and Azure aliases resolve to concrete icon entries.",
+        "Common non-cloud service aliases are registered by installFamousServiceIcons."
+      ]
+    },
+    {
+      "id": "QIN-INTEGRATION-001",
+      "statement": "The package builds and its installers register icons through the ArchMap-compatible registerIcon callback contract.",
+      "purpose": "Keep the icon pack usable without requiring changes to ArchMap core.",
+      "stakeholderRefs": ["STK-AUTHOR-001", "STK-MAINTAINER-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "riskRefs": ["RSK-INTEGRATION-001"],
+      "sourceRefs": ["SRC-TOOLS-001", "SRC-SOURCE-001"],
+      "governanceOwner": "Maintainer",
+      "status": "active",
+      "acceptanceCriteria": [
+        "npm run typecheck succeeds.",
+        "npm run build succeeds.",
+        "Installer smoke checks register expected keys and aliases."
+      ]
+    },
+    {
+      "id": "QIN-PROVENANCE-001",
+      "statement": "Icon provenance, official cloud-source usage, and placeholder-badge limitations are documented.",
+      "purpose": "Avoid misleading downstream users about vendor asset rights or visual fidelity.",
+      "stakeholderRefs": ["STK-AUTHOR-001", "STK-MAINTAINER-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "riskRefs": ["RSK-PROVENANCE-001"],
+      "sourceRefs": ["SRC-README-001"],
+      "governanceOwner": "Maintainer",
+      "status": "active",
+      "acceptanceCriteria": [
+        "README describes official AWS, Google Cloud, and Azure icon sources.",
+        "README identifies placeholder badges for services not available in simple-icons.",
+        "README states that vendor icon assets remain governed by vendor terms."
+      ]
+    },
+    {
+      "id": "QIN-REGEN-001",
+      "statement": "Generated cloud-provider icon data is reproducible from a checked-in generation script and documented command.",
+      "purpose": "Keep the large generated catalog maintainable as cloud providers update service icons.",
+      "stakeholderRefs": ["STK-MAINTAINER-001", "STK-AI-001"],
+      "contextRefs": ["CTX-ARCHMAP-ICONS-001"],
+      "riskRefs": ["RSK-DRIFT-001"],
+      "sourceRefs": ["SRC-SOURCE-001", "SRC-README-001"],
+      "governanceOwner": "Maintainer",
+      "status": "active",
+      "acceptanceCriteria": [
+        "The generator script is checked in.",
+        "The generated catalog is checked in.",
+        "README documents the regeneration command."
+      ]
+    }
+  ],
+  "evidenceItems": [
+    {
+      "id": "EVD-TYPECHECK-001",
+      "sourceRef": "SRC-TOOLS-001",
+      "intentRefs": ["QIN-INTEGRATION-001"],
+      "method": "command execution",
+      "finding": "npm run typecheck completed successfully after the Azure alias and common-service icon additions.",
+      "polarity": "supports",
+      "confidenceInputs": {
+        "sourceReliability": 0.9,
+        "relevance": 0.95,
+        "coverage": 0.9,
+        "recency": 1,
+        "independence": 0.7,
+        "contradictionPenalty": 0
+      },
+      "confidence": 0.9,
+      "collectedAt": "2026-06-26"
+    },
+    {
+      "id": "EVD-BUILD-001",
+      "sourceRef": "SRC-TOOLS-001",
+      "intentRefs": ["QIN-INTEGRATION-001"],
+      "method": "command execution",
+      "finding": "npm run build completed successfully and emitted dist artifacts from the TypeScript sources.",
+      "polarity": "supports",
+      "confidenceInputs": {
+        "sourceReliability": 0.9,
+        "relevance": 0.9,
+        "coverage": 0.85,
+        "recency": 1,
+        "independence": 0.7,
+        "contradictionPenalty": 0
+      },
+      "confidence": 0.88,
+      "collectedAt": "2026-06-26"
+    },
+    {
+      "id": "EVD-RUNTIME-001",
+      "sourceRef": "SRC-SOURCE-001",
+      "intentRefs": ["QIN-DISCOVERY-001", "QIN-INTEGRATION-001"],
+      "method": "runtime smoke check",
+      "finding": "Runtime lookup checks resolved representative aliases including aws/s3, gcp/gcs, gcp/gce, azure/vm, azure/aks, azure/vnet, azure/kv, azure/acr, azure/apim, azure/lb, and azure/waf.",
+      "polarity": "supports",
+      "confidenceInputs": {
+        "sourceReliability": 0.85,
+        "relevance": 0.95,
+        "coverage": 0.85,
+        "recency": 1,
+        "independence": 0.75,
+        "contradictionPenalty": 0
+      },
+      "confidence": 0.88,
+      "collectedAt": "2026-06-26"
+    },
+    {
+      "id": "EVD-CATALOG-001",
+      "sourceRef": "SRC-SOURCE-001",
+      "intentRefs": ["QIN-DISCOVERY-001", "QIN-REGEN-001"],
+      "method": "source inspection",
+      "finding": "The generated cloud catalog contains 1271 provider service icons across AWS 305, GCP 261, and Azure 705, with provider-specific alias generation in scripts/generate-cloud-icons.mjs.",
+      "polarity": "supports",
+      "confidenceInputs": {
+        "sourceReliability": 0.8,
+        "relevance": 0.9,
+        "coverage": 0.9,
+        "recency": 1,
+        "independence": 0.7,
+        "contradictionPenalty": 0
+      },
+      "confidence": 0.86,
+      "collectedAt": "2026-06-26"
+    },
+    {
+      "id": "EVD-DOCS-001",
+      "sourceRef": "SRC-README-001",
+      "intentRefs": ["QIN-PROVENANCE-001", "QIN-REGEN-001", "QIN-DISCOVERY-001"],
+      "method": "documentation review",
+      "finding": "README documents install functions, cloud icon counts, service-key search APIs, representative aliases, regeneration command, official cloud sources, simple-icons usage, and placeholder badge limitations.",
+      "polarity": "supports",
+      "confidenceInputs": {
+        "sourceReliability": 0.75,
+        "relevance": 0.85,
+        "coverage": 0.8,
+        "recency": 1,
+        "independence": 0.65,
+        "contradictionPenalty": 0
+      },
+      "confidence": 0.81,
+      "collectedAt": "2026-06-26"
+    },
+    {
+      "id": "EVD-QIF-001",
+      "sourceRef": "SRC-QIF-001",
+      "intentRefs": ["QIN-REGEN-001", "QIN-PROVENANCE-001"],
+      "method": "QIF package validation",
+      "finding": "The QIF review package is structured for validation by the Quality Intent Framework v0.3.0 local verifier.",
+      "polarity": "supports",
+      "confidenceInputs": {
+        "sourceReliability": 0.8,
+        "relevance": 0.8,
+        "coverage": 0.75,
+        "recency": 1,
+        "independence": 0.7,
+        "contradictionPenalty": 0
+      },
+      "confidence": 0.81,
+      "collectedAt": "2026-06-26"
+    }
+  ],
+  "indicators": [
+    {
+      "id": "IND-CLOUD-COUNT-001",
+      "name": "Generated cloud service icon count",
+      "metricKind": "activity-count",
+      "value": 1271,
+      "unit": "icons",
+      "interpretation": "evidence-only",
+      "linkedIntentRef": "QIN-DISCOVERY-001",
+      "linkedRiskRef": "RSK-DISCOVERY-001"
+    },
+    {
+      "id": "IND-COMMON-COUNT-001",
+      "name": "Common external service entry count",
+      "metricKind": "activity-count",
+      "value": 32,
+      "unit": "entries",
+      "interpretation": "evidence-only",
+      "linkedIntentRef": "QIN-DISCOVERY-001",
+      "linkedRiskRef": "RSK-DISCOVERY-001"
+    }
+  ],
+  "evaluations": [
+    {
+      "id": "EVL-ARCHMAP-ICONS-001",
+      "scope": "Quality review of the local archmap-icons package after icon coverage and alias additions.",
+      "evaluatedIntentRefs": ["QIN-DISCOVERY-001", "QIN-INTEGRATION-001", "QIN-PROVENANCE-001", "QIN-REGEN-001"],
+      "evidenceRefs": ["EVD-TYPECHECK-001", "EVD-BUILD-001", "EVD-RUNTIME-001", "EVD-CATALOG-001", "EVD-DOCS-001", "EVD-QIF-001"],
+      "confidencePolicy": {
+        "partialThreshold": 0.6,
+        "achievedThreshold": 0.8
+      },
+      "verdicts": [
+        {
+          "intentRef": "QIN-DISCOVERY-001",
+          "decision": "achieved",
+          "confidence": 0.85,
+          "evidenceRefs": ["EVD-RUNTIME-001", "EVD-CATALOG-001", "EVD-DOCS-001"],
+          "rationale": "Representative runtime lookups resolve, the generated catalog is broad, and README documents search APIs and aliases.",
+          "residualRisk": "The alias set is heuristic and may still miss less common product nicknames."
+        },
+        {
+          "intentRef": "QIN-INTEGRATION-001",
+          "decision": "achieved",
+          "confidence": 0.89,
+          "evidenceRefs": ["EVD-TYPECHECK-001", "EVD-BUILD-001", "EVD-RUNTIME-001"],
+          "rationale": "TypeScript checks, package build, and runtime installer smoke checks all passed.",
+          "residualRisk": "Integration against a published ArchMap package should be rechecked once the matching ArchMap API is published."
+        },
+        {
+          "intentRef": "QIN-PROVENANCE-001",
+          "decision": "achieved",
+          "confidence": 0.81,
+          "evidenceRefs": ["EVD-DOCS-001", "EVD-QIF-001"],
+          "rationale": "Documentation names the icon sources and identifies placeholder-badge limitations, with this QIF package preserving the provenance review intent.",
+          "residualRisk": "This review does not constitute legal advice about vendor trademark or logo terms."
+        },
+        {
+          "intentRef": "QIN-REGEN-001",
+          "decision": "achieved",
+          "confidence": 0.83,
+          "evidenceRefs": ["EVD-CATALOG-001", "EVD-DOCS-001", "EVD-QIF-001"],
+          "rationale": "The generated file, generator script, and documented regeneration command are all present and traceable.",
+          "residualRisk": "Provider ZIP URLs and icon naming conventions may change in future upstream releases."
+        }
+      ],
+      "evaluatorRefs": ["Codex", "QIF-v0.3.0-local-validator"]
+    }
+  ],
+  "governanceEvents": [
+    {
+      "id": "GOV-ARCHMAP-ICONS-001",
+      "eventType": "introduce-intent",
+      "targetRef": "QIN-DISCOVERY-001",
+      "reason": "AI-focused icon lookup requires explicit quality intent around discoverability and alias coverage.",
+      "decision": "Approved for local package baseline.",
+      "approverRefs": ["Maintainer"],
+      "evidenceRefs": ["EVD-RUNTIME-001", "EVD-CATALOG-001", "EVD-DOCS-001"]
+    },
+    {
+      "id": "GOV-ARCHMAP-ICONS-002",
+      "eventType": "introduce-intent",
+      "targetRef": "QIN-PROVENANCE-001",
+      "reason": "Vendor icon packs need explicit provenance and placeholder disclosure.",
+      "decision": "Approved for local package baseline.",
+      "approverRefs": ["Maintainer"],
+      "evidenceRefs": ["EVD-DOCS-001", "EVD-QIF-001"]
+    }
+  ],
+  "acceptanceGates": [
+    {
+      "id": "GAT-ARCHMAP-ICONS-001",
+      "name": "ArchMap icons local quality gate",
+      "requiredArtifactRefs": [
+        "README.md",
+        "package.json",
+        "tsconfig.json",
+        "src/index.ts",
+        "src/cloud-icons.ts",
+        "src/cloud-icons.generated.ts",
+        "scripts/generate-cloud-icons.mjs",
+        "reports/qif/archmap-icons-qif-package.json"
+      ],
+      "criteria": [
+        {
+          "statement": "TypeScript typecheck passes.",
+          "status": "pass"
+        },
+        {
+          "statement": "Build passes.",
+          "status": "pass"
+        },
+        {
+          "statement": "Representative cloud aliases resolve through runtime lookup APIs.",
+          "status": "pass"
+        },
+        {
+          "statement": "Activity-count indicators are treated as evidence-only rather than quality itself.",
+          "status": "pass"
+        }
+      ]
+    }
+  ]
+}
