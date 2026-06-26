@@ -19,6 +19,7 @@
   "scripts": {
     "build": "tsc",
     "generate:cloud-icons": "node scripts/generate-cloud-icons.mjs",
+    "test": "npm run typecheck && npm run build && node scripts/test-icons.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

@@ -244,7 +244,7 @@
       "sourceRef": "SRC-SOURCE-001",
       "intentRefs": ["QIN-DISCOVERY-001", "QIN-INTEGRATION-001"],
       "method": "runtime smoke check",
-      "finding": "Runtime lookup checks resolved representative aliases including aws/s3, gcp/gcs, gcp/gce, azure/vm, azure/aks, azure/vnet, azure/kv, azure/acr, azure/apim, azure/lb, and azure/waf.",
+      "finding": "Runtime lookup checks in scripts/test-icons.mjs resolved representative aliases including aws/s3, gcp/gcs, gcp/gce, azure/vm, azure/aks, azure/vnet, azure/kv, azure/acr, azure/apim, azure/lb, and azure/waf.",
       "polarity": "supports",
       "confidenceInputs": {
         "sourceReliability": 0.85,
@@ -413,6 +413,7 @@
         "src/cloud-icons.ts",
         "src/cloud-icons.generated.ts",
         "scripts/generate-cloud-icons.mjs",
+        "scripts/test-icons.mjs",
         "reports/qif/archmap-icons-qif-package.json"
       ],
       "criteria": [
