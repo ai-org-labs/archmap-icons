@@ -407,6 +407,7 @@
       "name": "ArchMap icons local quality gate",
       "requiredArtifactRefs": [
         "README.md",
+        "docs/ICON-CATALOG.md",
         "package.json",
         "tsconfig.json",
         "src/index.ts",

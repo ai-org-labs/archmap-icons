@@ -6,6 +6,41 @@ ArchMap's `registerIcon()` mechanism.
 
 ## Usage
 
+### Install
+
+From npm, after publication:
+
+```bash
+npm install @archmap/icons
+```
+
+From GitHub:
+
+```bash
+npm install github:ai-org-labs/archmap-icons
+```
+
+The GitHub install path runs `prepare`, so the TypeScript sources are built
+into `dist/` during install.
+
+For CDN-style browser imports, use an npm ESM CDN after the package is
+published to npm:
+
+```html
+<script type="module">
+  import {
+    installCloudProviderIcons,
+    installFamousServiceIcons,
+  } from "https://esm.sh/@archmap/icons";
+</script>
+```
+
+Direct `unpkg`/`jsDelivr` file imports are not the recommended browser path
+because this package intentionally uses ESM dependencies. Use an ESM CDN that
+bundles dependencies, or install through npm.
+
+### Register Icons
+
 ```ts
 import { registerIcon } from "archmap";
 import { installCloudProviderIcons, installFamousServiceIcons } from "@archmap/icons";
@@ -25,6 +60,19 @@ nodes:
   DB: { provider: aws, kind: rds }
   Warehouse: { provider: gcp, kind: bigquery }
   App: { provider: azure, kind: app_services }
+```
+
+## Catalog
+
+The full generated list is available in [docs/ICON-CATALOG.md](docs/ICON-CATALOG.md).
+It includes common service keys, AWS/GCP/Azure `provider/kind` keys, titles,
+categories, and aliases.
+
+Regenerate it after source or generated cloud icon changes:
+
+```bash
+npm run build
+npm run generate:catalog
 ```
 
 ## Cloud Provider Service Icons

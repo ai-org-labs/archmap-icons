@@ -1,6 +1,6 @@
 {
   "name": "@archmap/icons",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Opt-in third-party service icon pack for ArchMap diagrams.",
   "type": "module",
   "main": "./dist/index.js",
@@ -14,11 +14,15 @@
   },
   "files": [
     "dist",
+    "docs",
     "README.md"
   ],
   "scripts": {
     "build": "tsc",
+    "generate:catalog": "node scripts/generate-catalog.mjs",
     "generate:cloud-icons": "node scripts/generate-cloud-icons.mjs",
+    "prepare": "npm run build",
+    "prepack": "npm run build",
     "test": "npm run typecheck && npm run build && node scripts/test-icons.mjs",
     "typecheck": "tsc --noEmit"
   },
